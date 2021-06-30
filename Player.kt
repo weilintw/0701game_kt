@@ -1,7 +1,10 @@
 import java.io.File
-/*c15-20
+/*c16-3
  */
-class Player(_name: String, var healthPoints: Int = 100, val isBlessed: Boolean, private val isImmortal: Boolean){
+class Player(_name: String,
+             override var healthPoints: Int = 100,
+             var isBlessed: Boolean,
+             private val isImmortal: Boolean): Fightable{
         var name = _name
         get() = "${field.capitalize()} of $hometown    "
         private set(value) {
@@ -43,4 +46,16 @@ class Player(_name: String, var healthPoints: Int = 100, val isBlessed: Boolean,
     }
     private fun selectHometown() = File("data/towns.txt")
         .readText().split("\r\n").shuffled().first()
+
+    override val diceCount = 3
+    override val diceSides = 6
+    override fun attack(opponent: Fightable): Int {
+        val damageDealt = if(isBlessed){
+            damageRoll * 2
+        } else {
+            damageRoll
+        }
+        opponent.healthPoints -= damageDealt
+        return damageDealt
+    }
 }
