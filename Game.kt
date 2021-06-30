@@ -48,6 +48,7 @@ object  Game{
             "ring" -> currentRoom.ringBell()
             "move" -> move(argument)
             "fight" -> fight()
+            "menu" -> currentRoom.menu.getMenu()
             else -> commandNotFound()
         }
         private  fun commandNotFound() ="I'm not quite sure what you're trying to do!"

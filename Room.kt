@@ -2,6 +2,7 @@
 */
 open class Room (val name:String){
     protected open val dangerLevel = 5
+    var menu = Menu()
     var monster: Monster? = Goblin()
     fun description() = "空間： $name\r\n" + "危險等級 : $dangerLevel\r\n" + "怪物：${monster?.description ?: "沒有怪物"}"
 
