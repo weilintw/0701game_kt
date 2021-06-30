@@ -6,7 +6,7 @@ class Player(_name: String,
              var isBlessed: Boolean,
              private val isImmortal: Boolean): Fightable{
         var name = _name
-        get() = "${field.capitalize()} of $hometown    "
+        get() = "${field.capitalize()} 來自 $hometown    "
         private set(value) {
             field = value.trim()
         }

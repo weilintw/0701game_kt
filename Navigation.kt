@@ -1,4 +1,4 @@
-/*
+/*16-12
 */
 enum class Direction(private val coordinate: Coordinate){
     NORTH(Coordinate(0,-1)),

@@ -32,5 +32,4 @@ class Goblin (name: String = "妖精",
     healthPoints: Int = 30): Monster(name, description, healthPoints){
         override val diceCount = 2
         override val diceSides = 8
-
 }

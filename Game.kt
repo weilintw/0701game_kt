@@ -1,6 +1,6 @@
 import java.lang.IllegalStateException
 import kotlin.system.exitProcess
-/*c16-11
+/*c16-12
 */
 fun main() {
     Game.play()
@@ -27,7 +27,7 @@ object  Game{
     }
 
     init {
-        println("Welcome, adventurer")
+        println("歡迎你，冒險家！")
         player.castFireBall(5)
     }
     private fun printPlayerStatus(player:Player) {
@@ -47,6 +47,7 @@ object  Game{
             "map" -> showMap()
             "ring" -> currentRoom.ringBell()
             "move" -> move(argument)
+            "fight" -> fight()
             else -> commandNotFound()
         }
         private  fun commandNotFound() ="I'm not quite sure what you're trying to do!"
@@ -66,6 +67,7 @@ object  Game{
             if(x==0) println("XO")
             if(x==1) println("OX")
         }
+        return
     }
     private fun checkQuit(){
         isQuit=true;
@@ -93,8 +95,8 @@ object  Game{
         "戰鬥確認"
     } ?: "偵測無戰鬥"
     private fun slay(monster: Monster){
-        println("${monster.name} 攻擊 ${monster.attack((player))} 損傷！")
-        println("${player.name} 攻擊 ${player.attack((monster))} 損傷！")
+        println("${monster.name} 攻擊 ${monster.attack((player))} 傷害！")
+        println("${player.name} 攻擊 ${player.attack((monster))} 傷害！")
 
         if (player.healthPoints <= 0){
             println(">>>> 你已被擊敗！感謝你的遊玩 <<<<")
