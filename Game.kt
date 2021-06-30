@@ -1,32 +1,10 @@
 import java.lang.IllegalStateException
-
-/*c15-20*/
-/*挑戰練習
-15.9: 實作 quit命令(Game.kt)
-15.10 挑戰練習:魔力地圖
-5.11  挑戰練習:搖鈴
+import kotlin.system.exitProcess
+/*c16-11
 */
 fun main() {
-//呼叫 Player 類別的主建構函數，產生一個類別實體
-//    var player = Player("wl")
-//    player.castFireBall(5)
-//
-//    var currentRoom = TownSquare() //Room("Foyer")
-//    println(currentRoom.description())
-//    println(currentRoom.load())
-//
-//    player.auraColor()
-//    printPlayerStatus(player)
     Game.play()
 }
-
-//private fun printPlayerStatus(player:Player) {
-//    println(
-//        "光環顏色：${player.auraColor()}" + "       走運嗎？" +
-//                "${if (player.isBlessed) "是的" else "否"}"
-//    )
-//    println("${player.name}${player.formaHealthStatus()}")
-//}
 object  Game{
     final var isQuit =false
     private var player = Player("wl")
@@ -73,8 +51,6 @@ object  Game{
         }
         private  fun commandNotFound() ="I'm not quite sure what you're trying to do!"
     }
-
-
     private fun showMap(){
         val  x= player.currentPosition.x
         val  y =player.currentPosition.y
@@ -90,15 +66,12 @@ object  Game{
             if(x==0) println("XO")
             if(x==1) println("OX")
         }
-
-
     }
-
-    private  fun checkQuit(){
+    private fun checkQuit(){
         isQuit=true;
         println("感謝你，再見！")
     }
-    private  fun move(directionInput: String) =
+    private fun move(directionInput: String) =
         try {
             val direction =Direction.valueOf(directionInput.toUpperCase())
             val newPosition =direction.updateCoordinate(player.currentPosition)
@@ -112,4 +85,24 @@ object  Game{
         } catch (e: Exception){
             "Invalid direction: $directionInput. "
         }
+    private fun fight() = currentRoom.monster?.let {
+        while (player.healthPoints > 0 && it.healthPoints > 0){
+            slay(it)
+            Thread.sleep(1000)
+        }
+        "戰鬥確認"
+    } ?: "偵測無戰鬥"
+    private fun slay(monster: Monster){
+        println("${monster.name} 攻擊 ${monster.attack((player))} 損傷！")
+        println("${player.name} 攻擊 ${player.attack((monster))} 損傷！")
+
+        if (player.healthPoints <= 0){
+            println(">>>> 你已被擊敗！感謝你的遊玩 <<<<")
+            exitProcess(0)
+        }
+        if (monster.healthPoints <= 0){
+            println(">>>> ${monster.name} 已被擊敗")
+            currentRoom.monster = null
+        }
+    }
 }

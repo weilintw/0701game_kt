@@ -15,7 +15,7 @@ interface Fightable{
 }
 abstract class Monster(val name:String,
                        val description: String,
-                       override var healthPoint: Int): Fightable{
+                       override var healthPoints: Int): Fightable{
 //    override val diceCount: Int
 //        get() = TODO("Not yet implemented")
 //    override val diceSides: Int
@@ -29,7 +29,7 @@ abstract class Monster(val name:String,
 }
 class Goblin (name: String = "妖精",
     description: String = "一隻討厭的地精",
-    healthPoint: Int = 30): Monster(name, description, healthPoint){
+    healthPoints: Int = 30): Monster(name, description, healthPoints){
         override val diceCount = 2
         override val diceSides = 8
 
