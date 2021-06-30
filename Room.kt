@@ -9,7 +9,6 @@ open class Room (val name:String){
     open fun ringBell() = "This is room bell"
 }
 
-
 open class TownSquare : Room("Town Square"){
     override val dangerLevel = super.dangerLevel -3
     private  var bellSound ="GWONG"

@@ -16,10 +16,6 @@ interface Fightable{
 abstract class Monster(val name:String,
                        val description: String,
                        override var healthPoints: Int): Fightable{
-//    override val diceCount: Int
-//        get() = TODO("Not yet implemented")
-//    override val diceSides: Int
-//        get() = TODO("Not yet implemented")
 
     override fun attack(opponent: Fightable): Int {
         val damageDealt = damageRoll

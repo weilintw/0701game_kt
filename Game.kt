@@ -95,8 +95,8 @@ object  Game{
         "戰鬥確認"
     } ?: "偵測無戰鬥"
     private fun slay(monster: Monster){
-        println("${monster.name} 攻擊 ${monster.attack((player))} 傷害！")
-        println("${player.name} 攻擊 ${player.attack((monster))} 傷害！")
+        println("${monster.name} 攻擊 ${monster.attack((player))}點 傷害！")
+        println("${player.name} 攻擊 ${player.attack((monster))}點 傷害！")
 
         if (player.healthPoints <= 0){
             println(">>>> 你已被擊敗！感謝你的遊玩 <<<<")
