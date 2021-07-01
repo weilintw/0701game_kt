@@ -1,4 +1,4 @@
-/*c16-8
+/* 空間
 */
 open class Room (val name:String){
     protected open val dangerLevel = 5

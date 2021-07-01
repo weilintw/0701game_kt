@@ -1,18 +1,17 @@
-/*c10-11 美化酒水單 */
-/*c10-12 進一步美化酒水單 */
+/* 酒館
+*/
 //import kotlin.math.roundToInt
 import java.io.File
-const val TAVERN_NAME = "Allen's Folly"
+const val TAVERN_NAME = "Hunter's Folly"
 
 class Menu {
-
     val menuList = File("data/tavern-menu-items.txt").readText().split("\n")
     var menuSet = mutableSetOf<String>()
     var nowType = ""
     fun getMenu() {
-        println("*** Welcome to Allen's Folly ***")
+        println("******  歡迎來到 Hunter 的酒館  *******\r\n") //Welcome to Allen's Folly
         menuList.forEachIndexed { index, data ->
-            placeOrder("patron", data)
+            placeOrder("顧客", data) //patron
         }
         menuList.all { data ->
             menuSet.add(data)
@@ -39,7 +38,7 @@ class Menu {
             spaceString += " "
         }
         if (type != nowType)
-            println("$spaceString~[$type]~")
+            println("$spaceString~ [$type] ~")
         //c10-12 進一步美化酒水單 end
         println("$name$dotString$price")
         nowType = type

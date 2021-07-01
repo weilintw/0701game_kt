@@ -1,5 +1,5 @@
 import java.io.File
-/*c16-3
+/* 玩家
  */
 class Player(_name: String,
              override var healthPoints: Int = 100,
@@ -12,6 +12,7 @@ class Player(_name: String,
         }
     val hometown by lazy {selectHometown()}
     var currentPosition = Coordinate(0,0)
+    var wine = Wine()
 
     init {
         require(healthPoints > 0,{"健康點數需大於0"})
@@ -41,7 +42,7 @@ class Player(_name: String,
         }
 
     fun castFireBall(numFireballs: Int = 2): Int {
-        println("FireBall杯數：$numFireballs")
+        println("FireBall 杯數：$numFireballs")
         return numFireballs
     }
     private fun selectHometown() = File("data/towns.txt")

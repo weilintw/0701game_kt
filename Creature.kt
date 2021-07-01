@@ -1,6 +1,5 @@
 import java.util.*
-
-/*16-7
+/* 生物
 */
 interface Fightable{
     var healthPoints: Int

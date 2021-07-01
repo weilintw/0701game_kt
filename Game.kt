@@ -1,47 +1,50 @@
+import java.io.File
 import java.lang.IllegalStateException
 import kotlin.system.exitProcess
-/*c16-12
+/* Main
 */
 fun main() {
     Game.play()
 }
-object  Game{
-    final var isQuit =false
-    private var player = Player("wl")
+object  Game {
+    final var isQuit = false
+    private var player = Player("Allen")
     var currentRoom: Room = TownSquare()
-    private  var worldMap = listOf(
-        listOf(currentRoom,Room("Tavern"),Room("Back Room")),
-        listOf(Room("Long Corridor"),Room("Generic Room")),
-
+    private var worldMap = listOf(
+        listOf(currentRoom, Room("Tavern"), Room("Back Room")),
+        listOf(Room("Long Corridor"), Room("Generic Room")),
     )
+
     fun play() {
-        while (!isQuit){
+        while (!isQuit) {
             println(currentRoom.description())
             println(currentRoom.load())
             player.auraColor()
             printPlayerStatus(player)
-            print("> Enter you command: ")
+            print("> Enter you command： ")
             //println("Last command: ${readLine()}")
             println(GameInput(readLine()).processCommand())
         }
     }
 
     init {
-        println("歡迎你，冒險家！")
+        println("------  歡迎你 ~ 冒險家！ ------")
         player.castFireBall(5)
     }
-    private fun printPlayerStatus(player:Player) {
+
+    private fun printPlayerStatus(player: Player) {
         println(
             "光環顏色：${player.auraColor()}" + "       走運嗎？" +
                     "${if (player.isBlessed) "是的" else "否"}"
         )
         println("${player.name}${player.formaHealthStatus()}")
     }
-    private  class GameInput(arg: String?){
-        private  val input = arg ?: ""
+
+    private class GameInput(arg: String?) {
+        private val input = arg ?: ""
         val command = input.split(" ")[0]
-        val argument = input.split(" ").getOrElse(1,{""})
-        fun processCommand() = when (command.toLowerCase()){
+        val argument = input.split(" ").getOrElse(1, { "" })
+        fun processCommand() = when (command.toLowerCase()) {
             "quit" -> checkQuit()
             "exit" -> checkQuit()
             "map" -> showMap()
@@ -49,10 +52,27 @@ object  Game{
             "move" -> move(argument)
             "fight" -> fight()
             "menu" -> currentRoom.menu.getMenu()
+            "wine" -> wine(argument)
             else -> commandNotFound()
         }
-        private  fun commandNotFound() ="I'm not quite sure what you're trying to do!"
+
+        private fun commandNotFound() = "I'm not quite sure what you're trying to do!"
     }
+
+    private fun wine(argument: String) {
+    try
+    {
+        println("argument = $argument")
+        val menuList = File("data/tavern-menu-items.txt").readText().split("\n")
+        val menuData = menuList[argument.toInt()]
+        println("menuData = $menuData")
+        player.wine.placeOrder(menuData)
+        //"thank you"
+    } catch (e: Exception)
+    {
+        // "無效： $e " //Invalid Exception
+    }
+}
     private fun showMap(){
         val  x= player.currentPosition.x
         val  y =player.currentPosition.y
@@ -72,21 +92,21 @@ object  Game{
     }
     private fun checkQuit(){
         isQuit=true;
-        println("感謝你，再見！")
+        println("感謝你，再見")
     }
     private fun move(directionInput: String) =
         try {
             val direction =Direction.valueOf(directionInput.toUpperCase())
             val newPosition =direction.updateCoordinate(player.currentPosition)
             if (!newPosition.isInBounds){
-                throw IllegalStateException("$direction is out of bounds.")
+                throw IllegalStateException("$direction 已越界") //("$direction is out of bounds.")
             }
             val newRoom  = worldMap[newPosition.y][newPosition.x]
             player.currentPosition = newPosition
             currentRoom = newRoom
-            "OK, you move $direction to the ${newRoom.name}.\n${newRoom.load()}"
+            "好的，你將往 $direction 移動至 ${newRoom.name}.\n${newRoom.load()}" //"OK, you move $direction to the
         } catch (e: Exception){
-            "Invalid direction: $directionInput. "
+            "無效方向： $directionInput. "
         }
     private fun fight() = currentRoom.monster?.let {
         while (player.healthPoints > 0 && it.healthPoints > 0){
@@ -104,7 +124,7 @@ object  Game{
             exitProcess(0)
         }
         if (monster.healthPoints <= 0){
-            println(">>>> ${monster.name} 已被擊敗")
+            println(">>>> ${monster.name} 已被擊殺")
             currentRoom.monster = null
         }
     }
